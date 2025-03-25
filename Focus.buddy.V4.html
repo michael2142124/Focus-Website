@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locked In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: #000;
+      overflow-x: hidden;
+    }
+    .intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 999;
+      animation: fadeOut 2s ease 3s forwards;
+    }
+    .intro-logo {
+      font-size: 3em;
+      background: linear-gradient(90deg, #00d2ff, #6a11cb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      animation: logoFadeIn 1.5s ease forwards;
+    }
+    .intro img {
+      width: 80px;
+      height: auto;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: logoFadeIn 1.5s ease 1s forwards;
+    }
+    @keyframes logoFadeIn {
+      to { opacity: 1; transform: scale(1.05); }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+    .scene {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background: linear-gradient(to top, #001d3d, #003566);
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      filter: blur(20px);
+      animation: floatClouds 60s linear infinite;
+    }
+    @keyframes floatClouds {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(120vw); }
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 80px 30px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3.5em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #00d2ff, #6a11cb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    h1 img {
+      width: 40px;
+      height: auto;
+    }
+    #timer {
+      font-size: 6em;
+      font-weight: bold;
+      margin: 40px 0;
+      text-shadow: 0 0 20px #00d2ff88;
+    }
+    .btn {
+      padding: 14px 30px;
+      margin: 12px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #00d2ff, #6a11cb);
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    #message {
+      margin-top: 30px;
+      font-size: 1.4em;
+      font-style: italic;
+      opacity: 0.9;
+    }
+    #settings {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+    }
+    label {
+      font-weight: 500;
+      display: inline-block;
+      margin: 10px;
+    }
+    input[type="number"] {
+      width: 70px;
+      padding: 8px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      margin-left: 5px;
+      text-align: center;
+    }
+    .progress {
+      height: 18px;
+      width: 100%;
+      background: #ffffff22;
+      border-radius: 12px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: #00d2ff;
+      transition: width 0.5s ease;
+    }
+    .quote-box {
+      margin-top: 50px;
+      font-size: 1.2em;
+      font-style: italic;
+      color: #ccc;
+    }
+    #soundControls {
+      position: fixed;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 10;
+    }
+    #soundControls button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 15px;
+      border: none;
+      background: linear-gradient(90deg, #00d2ff, #6a11cb);
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="intro">
+    <img src="https://cdn-icons-png.flaticon.com/512/2107/2107957.png" alt="Locked In Logo" />
+    <div class="intro-logo">Locked In</div>
+  </div>
+  <div class="scene" id="scene"></div>
+  <div id="soundControls">
+    <button onclick="setSound('rain')">🌧️ Rain</button>
+    <button onclick="setSound('cafe')">☕ Cafe</button>
+    <button onclick="setSound('ocean')">🌊 Ocean</button>
+    <button onclick="setSound('lofi')">🎧 Lo-fi</button>
+    <button onclick="stopSound()">🔇 Stop</button>
+  </div>
+  <div class="container">
+    <h1><img src="https://cdn-icons-png.flaticon.com/512/2107/2107957.png" alt="logo" />Locked In</h1>
+    <div id="timer">25:00</div>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <button class="btn" onclick="startTimer()">Start Focus Session</button>
+    <button class="btn" onclick="resetTimer()">Reset</button>
+    <div id="message"></div>
+    <div id="settings">
+      <h3>Session Settings</h3>
+      <label for="focusLength">Focus (min):
+        <input type="number" id="focusLength" value="25" min="1" />
+      </label>
+      <label for="breakLength">Break (min):
+        <input type="number" id="breakLength" value="5" min="1" />
+      </label>
+    </div>
+    <div class="quote-box" id="quoteBox"></div>
+  </div>
+  <audio id="ambientAudio" loop></audio>
+  <script>
+    let timer;
+    let isFocus = true;
+    let timeLeft = 25 * 60;
+    let totalTime = 25 * 60;
+    const audio = document.getElementById('ambientAudio');
+
+    const soundTracks = {
+      rain: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3',
+      cafe: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+      ocean: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
+      lofi: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
+    };
+
+    function setSound(type) {
+      if (soundTracks[type]) {
+        audio.src = soundTracks[type];
+        audio.play();
+      }
+    }
+
+    function stopSound() {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    const messages = [
+      "You're crushing it! 🚀",
+      "Stay strong, one minute at a time 💪",
+      "Focus mode: ACTIVATED 🧠",
+      "Keep going, legend 🌟",
+      "Almost there, don’t stop now!"
+    ];
+
+    const quotes = [
+      "Success is the sum of small efforts, repeated.",
+      "Discipline is the bridge between goals and accomplishment.",
+      "The future depends on what you do today.",
+      "Action is the foundational key to all success.",
+      "Don’t watch the clock; do what it does. Keep going."
+    ];
+
+    function startTimer() {
+      clearInterval(timer);
+      const focusLength = parseInt(document.getElementById('focusLength').value) || 25;
+      const breakLength = parseInt(document.getElementById('breakLength').value) || 5;
+      totalTime = timeLeft = (isFocus ? focusLength : breakLength) * 60;
+
+      timer = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          isFocus = !isFocus;
+          document.getElementById("message").innerText = isFocus ?
+            "Break’s over! Time to get back to it. 💼" :
+            "Nice work! Take a break. ☕";
+          document.getElementById("quoteBox").innerText = getRandomQuote();
+          startTimer();
+        } else {
+          timeLeft--;
+          updateDisplay();
+        }
+      }, 1000);
+
+      document.getElementById("message").innerText = messages[Math.floor(Math.random() * messages.length)];
+      document.getElementById("quoteBox").innerText = getRandomQuote();
+    }
+
+    function updateDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      const percent = 100 - (timeLeft / totalTime) * 100;
+      document.getElementById("progressBar").style.width = `${percent}%`;
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      isFocus = true;
+      const focusLength = parseInt(document.getElementById('focusLength').value) || 25;
+      totalTime = timeLeft = focusLength * 60;
+      updateDisplay();
+      document.getElementById("message").innerText = "";
+      document.getElementById("quoteBox").innerText = "";
+    }
+
+    function getRandomQuote() {
+      return quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    const scene = document.getElementById('scene');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDuration = (Math.random() * 3 + 1) + 's';
+      scene.appendChild(star);
+    }
+    for (let i = 0; i < 10; i++) {
+      const cloud = document.createElement('div');
+      cloud.classList.add('cloud');
+      cloud.style.width = Math.random() * 200 + 100 + 'px';
+      cloud.style.height = cloud.style.width;
+      cloud.style.top = Math.random() * 70 + 'vh';
+      cloud.style.left = '-' + Math.random() * 200 + 'px';
+      cloud.style.animationDuration = (Math.random() * 60 + 60) + 's';
+      scene.appendChild(cloud);
+    }
+
+    updateDisplay();
+  </script>
+</body>
+</html>
