@@ -223,7 +223,7 @@
     <div id="settings">
       <h3>Session Settings</h3>
       <label for="focusLength">Focus (min):
-        <input type="number" id="focusLength" value="25" min="1" />
+        <input type="number" id="focusLength" value="30" min="1" />
       </label>
       <label for="breakLength">Break (min):
         <input type="number" id="breakLength" value="5" min="1" />
@@ -235,8 +235,8 @@
   <script>
     let timer;
     let isFocus = true;
-    let timeLeft = 25 * 60;
-    let totalTime = 25 * 60;
+    let timeLeft = 30 * 60;
+    let totalTime = 30 * 60;
     const audio = document.getElementById('ambientAudio');
 
     const soundTracks = {
@@ -276,7 +276,7 @@
 
     function startTimer() {
       clearInterval(timer);
-      const focusLength = parseInt(document.getElementById('focusLength').value) || 25;
+      const focusLength = parseInt(document.getElementById('focusLength').value) || 30;
       const breakLength = parseInt(document.getElementById('breakLength').value) || 5;
       totalTime = timeLeft = (isFocus ? focusLength : breakLength) * 60;
 
@@ -310,7 +310,7 @@
     function resetTimer() {
       clearInterval(timer);
       isFocus = true;
-      const focusLength = parseInt(document.getElementById('focusLength').value) || 25;
+      const focusLength = parseInt(document.getElementById('focusLength').value) || 30;
       totalTime = timeLeft = focusLength * 60;
       updateDisplay();
       document.getElementById("message").innerText = "";
