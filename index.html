@@ -275,38 +275,26 @@
     ];
 
     function startTimer() {
-            clearInterval(timer);
-        
-            const focusLength = parseInt(document.getElementById('focusLength').value) || 30;
-            const breakLength = parseInt(document.getElementById('breakLength').value) || 5;
-        
-            totalTime = (isFocus ? focusLength : breakLength) * 60;
-            const endTime = Date.now() + totalTime * 1000;
-        
-        function tick() {
-            const now = Date.now();
-            timeLeft = Math.round((endTime - now) / 1000);
-        
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                isFocus = !isFocus;
-                document.getElementById("message").innerText = isFocus
-                ? "Break’s over! Time to get back to it. 💼"
-                : "Nice work! Take a break. ☕";
-                document.getElementById("quoteBox").innerText = getRandomQuote();
-                startTimer(); // Start the next session automatically
-            } else {
-                updateDisplay();
-            }
+      clearInterval(timer);
+      const focusLength = parseInt(document.getElementById('focusLength').value) || 30;
+      const breakLength = parseInt(document.getElementById('breakLength').value) || 5;
+      totalTime = timeLeft = (isFocus ? focusLength : breakLength) * 60;
+
+      timer = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          isFocus = !isFocus;
+          document.getElementById("message").innerText = isFocus ?
+            "Break’s over! Time to get back to it. 💼" :
+            "Nice work! Take a break. ☕";
+          document.getElementById("quoteBox").innerText = getRandomQuote();
+          startTimer();
+        } else {
+          timeLeft--;
+          updateDisplay();
         }
-        
-            tick(); // Call it immediately to avoid 1-second delay
-            timer = setInterval(tick, 1000);
-        
-            document.getElementById("message").innerText = messages[Math.floor(Math.random() * messages.length)];
-            document.getElementById("quoteBox").innerText = getRandomQuote();
-    }
-    
+      }, 1000);
+
       document.getElementById("message").innerText = messages[Math.floor(Math.random() * messages.length)];
       document.getElementById("quoteBox").innerText = getRandomQuote();
     }
